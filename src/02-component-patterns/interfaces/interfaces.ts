@@ -5,11 +5,18 @@ import { TitleProps } from '../components/ProductTitle'
 
 export interface ProductCardProps {
   product: Product
-  children?: ReactElement | ReactElement[]
+  // children?: ReactElement | ReactElement[]
+  children: (args: ProductCardHandlers) => JSX.Element
   className?: string
   style?: CSSProperties
   onChange?: (args: onChangeArgs) => void
   value?: number
+  initialValues?: InitialValues
+}
+
+export interface InitialValues {
+  count?: number
+  maxCount?: number
 }
 
 export interface Product {
@@ -23,6 +30,7 @@ export interface ProductContextProps {
   increaseBy: (value: number) => void
   title: string
   img?: string
+  maxCount?: number
 }
 
 export interface ProductCardHOCProps {
@@ -44,4 +52,13 @@ export interface onChangeArgs {
 
 export interface ProductInCart extends Product {
   count: number
+}
+
+export interface ProductCardHandlers {
+  count: number
+  isMaxCountReached: boolean
+  maxCount?: number
+  product: Product
+  increaseBy: (value: number) => void
+  reset: () => void
 }

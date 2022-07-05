@@ -1,17 +1,30 @@
-import { useState, useEffect } from 'react'
-import { onChangeArgs, Product } from '../interfaces/interfaces'
+import { useState, useEffect, useRef } from 'react'
+import { InitialValues, onChangeArgs, Product } from '../interfaces/interfaces'
 
 interface useProductArgs {
   product: Product
   onChange?: (args: onChangeArgs) => void
   value?: number
+  initialValues?: InitialValues
 }
 
-const useProduct = ({ onChange, product, value = 0 }: useProductArgs) => {
-  const [counter, setCounter] = useState(value)
+const useProduct = ({
+  onChange,
+  product,
+  value = 0,
+  initialValues,
+}: useProductArgs) => {
+  const [counter, setCounter] = useState<number>(initialValues?.count || value)
+
+  const isMounted = useRef(false)
+
+  console.log(initialValues)
 
   const increaseBy = (value: number) => {
-    const newValue = Math.max(counter + value, 0)
+    let newValue = Math.max(counter + value, 0)
+    if (initialValues?.maxCount && newValue > initialValues?.maxCount) {
+      newValue = initialValues.maxCount
+    }
     setCounter(newValue)
 
     if (onChange) {
@@ -19,11 +32,27 @@ const useProduct = ({ onChange, product, value = 0 }: useProductArgs) => {
     }
   }
 
+  const reset = () => {
+    setCounter(initialValues?.count || value || 0)
+  }
+
   useEffect(() => {
+    if (!isMounted.current) return
     setCounter(value)
   }, [value])
 
-  return { counter, increaseBy }
+  useEffect(() => {
+    isMounted.current = true
+  }, [])
+
+  return {
+    counter,
+    increaseBy,
+    isMaxCountReached:
+      !!initialValues?.count && initialValues.maxCount === counter,
+    maxCount: initialValues?.maxCount,
+    reset,
+  }
 }
 
 export default useProduct
