@@ -1,4 +1,4 @@
-import React, { ReactElement, CSSProperties } from 'react'
+import { ReactElement, CSSProperties } from 'react'
 import { ButtonProps } from '../components/ProductButtons'
 import { ImageProps } from '../components/ProductImage'
 import { TitleProps } from '../components/ProductTitle'
@@ -8,6 +8,8 @@ export interface ProductCardProps {
   children?: ReactElement | ReactElement[]
   className?: string
   style?: CSSProperties
+  onChange?: (args: onChangeArgs) => void
+  value?: number
 }
 
 export interface Product {
@@ -34,3 +36,12 @@ export interface ProductCardHOCProps {
 //   increaseBy: (value: number) => void
 //   counter: number
 // }
+
+export interface onChangeArgs {
+  product: Product
+  count: number
+}
+
+export interface ProductInCart extends Product {
+  count: number
+}
