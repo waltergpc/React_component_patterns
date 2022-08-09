@@ -1,0 +1,33 @@
+[
+  {
+    "type": "input",
+    "name": "firstName",
+    "placeholder": "Fernando",
+    "label": "First Name",
+    "value": "",
+    "validations": [{ "type": "required" }, { "type": "minLength", "value": 5 }]
+  },
+  {
+    "type": "input",
+    "name": "lastName",
+    "placeholder": "Suarez",
+    "label": "Last Name",
+    "value": ""
+  },
+  {
+    "type": "input",
+    "name": "email",
+    "placeholder": "john@gmail.com",
+    "label": "Email",
+    "value": "",
+    "validations": [{ "type": "email" }]
+  },
+  {
+    "type": "select",
+    "name": "favoriteGame",
+
+    "label": "Favorite Game",
+    "value": "",
+    "options": ["Super Smash", "Zelda", "Mario Party", "Fable"]
+  }
+]
